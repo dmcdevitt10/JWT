@@ -5,15 +5,22 @@ import "./App.css";
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState('')
 
   const handleLogin = () => {
     axios
       .post(`/api/login`, { username, password })
       .then((res) => {
-        console.log(res.data);
+        setToken(res.data);
       })
       .catch((err) => console.log(err));
   };
+
+  const handleTest = () => {
+    axios.post(`/api/test`, {token}).then((res) => {
+      console.log(res.data)
+    })
+  }
 
   return (
     <div className="App">
@@ -31,6 +38,7 @@ function App() {
         value={password}
       />
       <button onClick={handleLogin}>Login</button>
+      <button onClick={handleTest}>Test</button>
     </div>
   );
 }
